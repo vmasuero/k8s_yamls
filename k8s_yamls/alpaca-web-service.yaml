@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpaca-service
+spec:
+  type: LoadBalancer
+  selector:
+    ver: "1"
+    app: "alpaca"
+  ports:
+    - port: 8080
+      targetPort: 8080
