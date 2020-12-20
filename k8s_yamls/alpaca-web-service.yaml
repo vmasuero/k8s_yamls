@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: alpaca-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     ver: "1"
     app: "alpaca"
