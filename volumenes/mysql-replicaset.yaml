@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: database
+          image: mariadb
+          resources:
+            requests:
+              cpu: 1
+              memory: 1Gi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: italia
+            - name: MYSQL_DATABASE
+              value: DB
+            - name: MYSQL_USER
+              value: valdo
+            - name: MYSQL_PASSWORD
+              value: italia
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: database
+              mountPath: "var/lib/mysql"
+      volumes:
+          - name: database
+            persistentVolumeClaim:
+              claimName: database
